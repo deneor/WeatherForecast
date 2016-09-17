@@ -16,6 +16,21 @@
     <%= f.text_field :name %>
   </div>
 
+    <div class="field">
+      <%= f.label 'Индекс' %>
+      <%= f.text_field :zip_code %>
+    </div>
+
+    <div class="field">
+      <%= f.label 'ID города' %>
+      <%= f.text_field :city_id %>
+    </div>
+
+    <div class="field">
+      <%= f.label 'Координаты (Latitude, Longitude)' %>
+      <%= f.text_field :lat %>, <%= f.text_field :lng %>
+    </div>
+
   <div class="actions">
     <%= f.submit 'Сохранить' %>
   </div>

@@ -47,6 +47,7 @@ class CitiesController < ApplicationController
   # POST /cities.json
   def create
     @city = City.new(city_params)
+    @city.use_for_api=@city.attributes.slice('name','city_id','lat','lng','zip_code').to_a.detect{|a| !a[1].blank?}[0]
 
     respond_to do |format|
       if @city.save
@@ -91,7 +92,7 @@ class CitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def city_params
-    params.require(:city).permit(:name)
+    params.require(:city).permit(:name, :zip_code, :lat, :lng, :city_id)
   end
 
   def js_request?

@@ -2,8 +2,8 @@ handler = Gmaps.build('Google');
 handler.buildMap({ internal: {id: 'map'}}, function(){
   markers = handler.addMarkers([
     {
-      lat: <%=@city.lat%>,
-      lng: <%=@city.lng%>,
+      lat: <%=@city.lat_from_api%>,
+      lng: <%=@city.lng_from_api%>,
       picture: {
         url: "http://www.google.com/intl/en_ALL/mapfiles/marker.png",
         width:  36,

@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160917133513) do
+ActiveRecord::Schema.define(version: 20160917185134) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "zip_code"
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "city_id"
+    t.string   "use_for_api"
   end
 
   create_table "weathers", force: :cascade do |t|
