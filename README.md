@@ -1,24 +1,13 @@
-# README
+# Информатор прогноза погоды
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Сервис отображения актуальной погоды в городах. Города задаются администратором на странице /admin .
+Информация о погоде берётся от API сервиса openweathermap.com .
 
-Things you may want to cover:
+Для отображения карты в action show используется gem Google-Maps-for-Rails, предоставляющая базовую интеграцию карты Google. Для корректной работы в данном экшене отключены turbolinks.
 
-* Ruby version
+Настройка приложения:
 
-* System dependencies
+* Необходимо создать файл config/secrets.yml и заполнить в нём api_key сервиса openweathermap.com, Google JS, а так же информацией для авторизации администратора. Пример в файле /config/secrets.yml.example
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Список городов хранится в sqlite. Для инициализации: rake db:create и rake db:migrate
+* Для авторизации используется HTTP basic auth
