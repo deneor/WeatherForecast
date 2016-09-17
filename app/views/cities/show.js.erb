@@ -1,0 +1,17 @@
+handler = Gmaps.build('Google');
+handler.buildMap({ internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      lat: <%=@city.lat%>,
+      lng: <%=@city.lng%>,
+      picture: {
+        url: "http://www.google.com/intl/en_ALL/mapfiles/marker.png",
+        width:  36,
+        height: 36
+      }
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  handler.getMap().setZoom(10);
+});
