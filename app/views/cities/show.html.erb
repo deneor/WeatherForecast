@@ -1,10 +1,13 @@
 <%= content_for(:body_attributes) do %>data-no-turbolink<% end %>
 <p id="notice"><%= notice %></p>
 
+
 <h1>
   <%= @city.name %>
 </h1>
-
+<% if alert %>
+    <p id="alert"><%= alert %></p>
+    <%else%>
 <p>
   <strong>Погода:</strong>
   <%= @weather_description %>
@@ -32,5 +35,6 @@
 </div>
 <script src="<%= city_path(@city, format: :js) %>"></script>
 
-
+<%end%>
 <%= link_to 'Назад', cities_path %>
+<% console %>

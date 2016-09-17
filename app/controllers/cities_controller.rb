@@ -21,8 +21,13 @@ class CitiesController < ApplicationController
   # GET /cities/1
   # GET /cities/1.json
   def show
-    @weather=@city.weather_info
-    @weather_description=@city.weather_descriptions.join(', ')
+
+    begin
+      @weather=@city.weather_info
+      @weather_description=@city.weather_descriptions.join(', ')
+    rescue
+      flash[:alert]='Нам не удалось получить данные от API. Попробуйте позже.'
+    end
     respond_to do |format|
       format.html {}
       format.js {}
