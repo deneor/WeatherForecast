@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Cities</h1>
+<h1>Прогноз погоды</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Город</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,9 +14,9 @@
     <% @cities.each do |city| %>
       <tr>
         <td><%= city.name %></td>
-        <td><%= link_to 'Show', city %></td>
-        <td><%= link_to 'Edit', edit_city_path(city) %></td>
-        <td><%= link_to 'Destroy', city, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Узнать погоду', city %></td>
+        <td><%= link_to 'Редактировать', edit_city_path(city) if @admin%></td>
+        <td><%= link_to 'Удалить', city, method: :delete, data: { confirm: 'Are you sure?' }  if @admin %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New City', new_city_path %>
+<%= link_to 'New City', new_city_path if @admin%>

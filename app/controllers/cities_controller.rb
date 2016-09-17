@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
-  http_basic_authenticate_with name: Rails.application.secrets.username, password: Rails.application.secrets.password, except: :index
+  http_basic_authenticate_with name: Rails.application.secrets.username, password: Rails.application.secrets.password, only: [:edit, :update, :admin, :destroy, :create]
 
   # GET /cities
   # GET /cities.json
@@ -8,9 +8,20 @@ class CitiesController < ApplicationController
     @cities = City.all
   end
 
+  def admin
+    @cities = City.all
+    @admin=true
+    respond_to do |format|
+      format.html { render :index }
+      end
+  end
+
+
   # GET /cities/1
   # GET /cities/1.json
   def show
+    @weather=@city.weather_info
+    @weather_description=@city.weather_descriptions.join(', ')
   end
 
   # GET /cities/new

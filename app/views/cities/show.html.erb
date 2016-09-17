@@ -1,9 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
+<h1>
   <%= @city.name %>
+</h1>
+
+<p>
+  <strong>Погода:</strong>
+  <%= @weather_description %>
 </p>
 
-<%= link_to 'Edit', edit_city_path(@city) %> |
-<%= link_to 'Back', cities_path %>
+<p>
+  <strong>Температура:</strong>
+  <%= "#{@weather.temp}C (от #{@weather.temp_min}C до #{@weather.temp_max}C)" %>
+</p>
+
+<p>
+  <strong>Ветер:</strong>
+  <%= "#{@weather.wind_speed} м/с, #{@weather.wind_direction}" %>
+</p>
+<p>
+  <strong>Видимость:</strong>
+  <%= "#{@weather.visibility} м" %>
+</p>
+
+
+<%= link_to 'Назад', cities_path %>
