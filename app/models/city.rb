@@ -3,7 +3,7 @@ class City < ApplicationRecord
 
   def weather_info
     info=ApplicationRecord.api_call(name)
-    return Weather.new(info['main'].merge(visibility: info['visibility'],
+    return Weather.new(info['main'].slice(:temp, :temp_min, :temp_max, :pressure, :humidity).merge(visibility: info['visibility'],
                                            wind_speed: info['wind']['speed'],
                                            wind_deg: info['wind']['deg'],
                                            clouds: info['clouds']['all']
