@@ -1,6 +1,7 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
   http_basic_authenticate_with name: Rails.application.secrets.username, password: Rails.application.secrets.password, only: [:edit, :update, :admin, :destroy, :create]
+  skip_before_action :verify_authenticity_token, if: :js_request?
 
   # GET /cities
   # GET /cities.json
@@ -13,7 +14,7 @@ class CitiesController < ApplicationController
     @admin=true
     respond_to do |format|
       format.html { render :index }
-      end
+    end
   end
 
 
@@ -22,6 +23,10 @@ class CitiesController < ApplicationController
   def show
     @weather=@city.weather_info
     @weather_description=@city.weather_descriptions.join(', ')
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
   end
 
   # GET /cities/new
@@ -74,13 +79,17 @@ class CitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_city
-      @city = City.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_city
+    @city = City.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def city_params
-      params.require(:city).permit(:name)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def city_params
+    params.require(:city).permit(:name)
+  end
+
+  def js_request?
+    request.format.js?
+  end
 end
