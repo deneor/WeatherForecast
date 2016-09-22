@@ -10,11 +10,7 @@ class City < ApplicationRecord
   def weather_info
     info=ApplicationRecord.api_call(key_for_api)
     return :error_from_api unless info.include?('cod') and info['cod']==200
-    Weather.new(info['main'].slice('temp', 'temp_min', 'temp_max', 'pressure', 'humidity').merge(visibility: info['visibility'],
-                                           wind_speed: info['wind']['speed'],
-                                           wind_deg: info['wind']['deg'],
-                                           clouds: info['clouds']['all']
-    ))
+    Weather.new(info)
   end
 
   def weather_descriptions
