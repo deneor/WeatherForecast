@@ -21,11 +21,10 @@ class CitiesController < ApplicationController
   # GET /cities/1
   # GET /cities/1.json
   def show
-
-    begin
-      @weather=@city.weather_info
+    @weather=@city.weather_info
+    unless @weather==:error_from_api
       @weather_description=@city.weather_descriptions.join(', ')
-    rescue
+    else
       flash[:alert]='Нам не удалось получить данные от API. Попробуйте позже.'
     end
     respond_to do |format|
@@ -47,7 +46,7 @@ class CitiesController < ApplicationController
   # POST /cities.json
   def create
     @city = City.new(city_params)
-    @city.use_for_api=@city.attributes.slice('name','city_id','lat','lng','zip_code').to_a.detect{|a| !a[1].blank?}[0]
+    @city.use_for_api=@city.attributes.slice('name', 'city_id', 'lat', 'lng', 'zip_code').to_a.detect { |a| !a[1].blank? }[0]
 
     respond_to do |format|
       if @city.save

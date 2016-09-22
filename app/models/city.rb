@@ -9,7 +9,8 @@ class City < ApplicationRecord
   KEYS=[['name', 'q'],['zip_code','zip'],['lat','coords'],['lng','coords'],['city_id','id']]
   def weather_info
     info=ApplicationRecord.api_call(key_for_api)
-    return Weather.new(info['main'].slice('temp', 'temp_min', 'temp_max', 'pressure', 'humidity').merge(visibility: info['visibility'],
+    return :error_from_api unless info.include?('cod') and info['cod']==200
+    Weather.new(info['main'].slice('temp', 'temp_min', 'temp_max', 'pressure', 'humidity').merge(visibility: info['visibility'],
                                            wind_speed: info['wind']['speed'],
                                            wind_deg: info['wind']['deg'],
                                            clouds: info['clouds']['all']
@@ -40,14 +41,14 @@ class City < ApplicationRecord
   private
 
   def validate_for_cooords
-    if lat.blank? or lng.blank?
-      errors.add(:base, "Укажите оба поля коордианат или не указывайте их вообще") if !lat.blank? and !lng.blank?
+    if (lat.blank? or lng.blank?) and !(lat.blank? and lng.blank?)
+      errors.add(:coords, "Укажите оба поля коордианат или не указывайте их вообще")
     end
   end
 
   def validate_if_usefull_for_api
-    if ApplicationRecord.api_call(key_for_api)['cod']=='404'
-      errors.add(:base, "Не найдена информация о погоде в городе по таким параметрам")
+    if !errors.any? and ApplicationRecord.api_call(key_for_api)['cod']=='404'
+      errors.add(:name, "Не найдена информация о погоде в городе по таким параметрам")
     end
   end
 
