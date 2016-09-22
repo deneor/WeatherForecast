@@ -11,7 +11,7 @@ RSpec.describe City, type: :model do
     expect(City.new(zip_code:'119517', use_for_api:'zip_code').weather_info.class).to eq(Weather)
   end
   it "can get weather info by lat,lng" do
-    expect(City.new(lat:55.55, lng:37.55, use_for_api:'lat').weather_info.class).to eq(Weather)
+    expect(City.new(lat:55.75, lng:37.62, use_for_api:'lat').weather_info.class).to eq(Weather)
   end
   it "can get weather info by city_id" do
     expect(City.new(city_id:524901, use_for_api:'city_id').weather_info.class).to eq(Weather)
