@@ -51,11 +51,19 @@ RSpec.describe City, type: :model do
     city.validate
     !city.errors.include?(:coords)
   end
-
   it 'got coords from api in Float' do
     fakeapi
     City.new(name:'Moscow', use_for_api:'name').lat_from_api.is_a?(Float) and
         City.new(name:'Moscow', use_for_api:'name').lng_from_api.is_a?(Float)
+  end
+
+  it 'return false on network error' do
+    key='q=London'
+    uri=URI(URI::encode("http://api.openweathermap.org/data/2.5/weather?#{key}"+
+                            "&APPID=#{Rails.application.secrets.openweathermap_appid}&units=metric&lang=RU"))
+    Net::HTTP.stub(:get_response).with(uri).and_raise(SocketError)
+
+    expect(ApplicationRecord.api_call(key)).to eq(false)
   end
 
 end

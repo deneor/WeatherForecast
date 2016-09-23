@@ -9,7 +9,7 @@ class City < ApplicationRecord
   KEYS=[['name', 'q'],['zip_code','zip'],['lat','coords'],['lng','coords'],['city_id','id']]
   def weather_info
     info=ApplicationRecord.api_call(key_for_api)
-    return :error_from_api unless info.include?('cod') and info['cod']==200
+    return :error_from_api if !info || !(info.include?('cod') and info['cod']==200)
     Weather.new(info)
   end
 
